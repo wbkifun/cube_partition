@@ -25,7 +25,7 @@ current_dir = dirname(abspath(__file__))
 lib_dir = dirname(current_dir)
 sys.path.append(lib_dir)
 from cube_partition_sfc import CubePartitionSFC
-from cube_partition_band import CubePartitionBand
+from cube_partition_stripe import CubePartitionStripe
 
 
 
@@ -700,7 +700,7 @@ def plot_cube_partition(ne, nproc, save):
 
     nelems, cube_rank, cube_lid = obj.make_cube_rank()
 
-    obj2 = CubePartitionBand(ne, nproc)
+    obj2 = CubePartitionStripe(ne, nproc)
     cube_color = obj2.make_cube_color(cube_rank)
     perimeter_ratio, num_nbrs = obj2.global_perimeter_ratio(cube_rank)
     print('ne={}, nproc={}, perimter_ratio={}'.format(ne, nproc, perimeter_ratio))

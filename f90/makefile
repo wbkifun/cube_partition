@@ -3,7 +3,7 @@
 FC = gfortran
 FCFLAGS = -O3 -W -Wall -fcheck=all
 
-SRCS = cube_neighbor.f90 cube_partition_sfc.f90 cube_partition_band.f90
+SRCS = cube_neighbor.f90 cube_partition_sfc.f90 cube_partition_stripe.f90
 OBJS = $(SRCS:.f90=.o)
 MODS = $(SRCS:.f90=.mod)
 LIBNAME = libshared

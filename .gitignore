@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+*.o
+*.mod
+*.so
+test/data/
+test/png/

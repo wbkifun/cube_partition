@@ -1,6 +1,6 @@
 '''
 
-abstract : wrapper to cube_partition_band.f90
+abstract : wrapper to cube_partition_stripe.f90
 
 history :
   2018-03-06  ki-hwan kim  start
@@ -19,7 +19,7 @@ from cube_neighbor import CubeNeighbor
 
 
 
-class CubePartitionBand(object):
+class CubePartitionStripe(object):
     ''' 
     Wrapper the cube_partition.f90 library
     '''
@@ -33,7 +33,7 @@ class CubePartitionBand(object):
         #
         so_dpath = join(dirname(abspath(__file__)), 'f90')
         libname = 'libshared'
-        modname = 'cube_partition_band'
+        modname = 'cube_partition_stripe'
         func_args = { \
             'calc_perimeter_ratio': [('i','i','i','i','i','i1d','i1d','i2d'), 'f'],
             'find_optimal_band': [('i','i','i','i','i','i1d','i2d','i1d'), None],

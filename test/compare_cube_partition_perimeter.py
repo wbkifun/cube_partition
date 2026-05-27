@@ -21,7 +21,7 @@ import matplotlib.pyplot as plt
 current_dir = dirname(abspath(__file__))
 lib_dir = dirname(current_dir)
 sys.path.append(lib_dir)
-from cube_partition_band import CubePartitionBand
+from cube_partition_stripe import CubePartitionStripe
 from cube_partition_sfc import CubePartitionSFC
 
 
@@ -47,7 +47,7 @@ def get_perimeter_ratios(ne, max_nproc, spread):
         nproc = i + 1
 
         sfc = CubePartitionSFC(ne, nproc)
-        band = CubePartitionBand(ne, nproc)
+        band = CubePartitionStripe(ne, nproc)
 
         nelems1, cube_rank1, cube_lid1 = sfc.make_cube_rank()
         nelems2, cube_rank2, cube_lid2 = band.make_cube_rank()

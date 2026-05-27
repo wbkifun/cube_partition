@@ -1,5 +1,5 @@
 !-------------------------------------------------------------------------------
-   module cube_partition_band
+   module cube_partition_stripe
 !-------------------------------------------------------------------------------
 !
 ! abstract : partitioning the cubed-sphere using the band search method
@@ -813,5 +813,5 @@
 !
 !
 !-------------------------------------------------------------------------------
-end module cube_partition_band
+end module cube_partition_stripe
 !-------------------------------------------------------------------------------

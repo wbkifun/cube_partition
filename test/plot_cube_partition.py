@@ -3,7 +3,7 @@
 abstract : plot the partitioning of the cubed-sphere
 
 history :
-  2018-03-29  ki-hwan kim  split from test_cube_partition_band.py
+  2018-03-29  ki-hwan kim  split from test_cube_partition_stripe.py
 
 '''
 
@@ -23,7 +23,7 @@ current_dir = dirname(abspath(__file__))
 lib_dir = dirname(current_dir)
 sys.path.append(lib_dir)
 from cube_partition_sfc import CubePartitionSFC
-from cube_partition_band import CubePartitionBand
+from cube_partition_stripe import CubePartitionStripe
 
 
 
@@ -68,10 +68,10 @@ def discrete7_cmap(n):
 
 def plot_find_optimal_band():
     '''
-    cube_partition_band: find_optimal_band(): plot the box
+    cube_partition_stripe: find_optimal_band(): plot the box
     '''
     ne, nproc = 10, 37
-    obj = CubePartitionBand(ne, nproc)
+    obj = CubePartitionStripe(ne, nproc)
 
     box = np.ones((2*ne,ne), 'i4', order='F')*(-1)
     start_rank = 0
@@ -98,7 +98,7 @@ def plot_find_optimal_band():
 
 def check_perimeter_ratio():
     '''
-    cube_partition_band: check_perimeter_ratio()
+    cube_partition_stripe: check_perimeter_ratio()
     '''
     opt = 1
 
@@ -110,7 +110,7 @@ def check_perimeter_ratio():
         nproc = ne  # maximum number of processes
         nelem = 53
 
-        obj = CubePartitionBand(ne, nproc)
+        obj = CubePartitionStripe(ne, nproc)
         nelems = np.ones(ne, 'i4')*nelem
         ratios = np.zeros(ne, 'f8')
         box = np.ones((2*ne, ne), 'i4', order='F')*(-1)
@@ -137,7 +137,7 @@ def check_perimeter_ratio():
         nproc = ne  # maximum number of processes
         nelem = 13
 
-        obj = CubePartitionBand(ne, nproc)
+        obj = CubePartitionStripe(ne, nproc)
         nelems = np.ones(ne, 'i4')*nelem
         i12 = np.array([1, 1, ne, 0], 'i4')  # (i1, i2, band_elem, remain_elem)
         box = np.ones((2*ne, ne), 'i4', order='F')*(-1)
@@ -188,7 +188,7 @@ def fit_perimeter_ratio():
         nproc = ne  # maximum number of processes
         nelem = s
 
-        obj = CubePartitionBand(ne, nproc)
+        obj = CubePartitionStripe(ne, nproc)
         nelems = np.ones(ne, 'i4')*nelem
         ratios = np.zeros(ne, 'f8')
         box = np.ones((2*ne, ne), 'i4', order='F')*(-1)
@@ -220,14 +220,14 @@ def fit_perimeter_ratio():
 
 def plot_cube_partition(ne, nproc, method, save, rank_fontsize):
     '''
-    cube_partition_band: plot the cube_rank array
+    cube_partition_stripe: plot the cube_rank array
     '''
-    obj = CubePartitionBand(ne, nproc)
+    obj = CubePartitionStripe(ne, nproc)
 
     if method == 'sfc':
         sfc = CubePartitionSFC(ne, nproc)
         nelems, cube_rank, cube_lid = sfc.make_cube_rank()
-    elif method == 'band':
+    elif method == 'stripe':
         nelems, cube_rank, cube_lid = obj.make_cube_rank()
 
     cube_color = obj.make_cube_color(cube_rank)
@@ -329,7 +329,7 @@ if __name__ == '__main__':
     parser.add_argument('--rank_fontsize', type=int, default=0, help='fontsize of rank numbers')
     parser.add_argument('ne', type=int, help='number of elements')
     parser.add_argument('nproc', type=int, help='number of processors')
-    parser.add_argument('method', type=str, choices=['sfc','band'], help='partitioning method')
+    parser.add_argument('method', type=str, choices=['sfc','stripe'], help='partitioning method')
     args = parser.parse_args()
 
     plot_cube_partition(args.ne, args.nproc, args.method, args.save, args.rank_fontsize)

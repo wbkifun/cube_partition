@@ -1,6 +1,6 @@
 '''
 
-abstract : unittest of cube_partition_band.f90
+abstract : unittest of cube_partition_stripe.f90
 
 history :
   2018-03-06  ki-hwan kim  start
@@ -24,14 +24,14 @@ import matplotlib.patches as mp
 current_dir = dirname(abspath(__file__))
 lib_dir = dirname(current_dir)
 sys.path.append(lib_dir)
-from cube_partition_band import CubePartitionBand
+from cube_partition_stripe import CubePartitionStripe
 
 
 
 def common_find_optimal_band(ne, nproc):
     start_rank = 0
     start_i = 1
-    obj = CubePartitionBand(ne, nproc)
+    obj = CubePartitionStripe(ne, nproc)
     nelems = np.ones(nproc, 'i4')*(ne*ne*6//nproc)
     if (ne*ne*6)%nproc > 0: nelems[-(ne*ne*6)%nproc:] += 1
     box = np.ones((2*ne,ne), 'i4', order='F')*(-1)
@@ -43,7 +43,7 @@ def common_find_optimal_band(ne, nproc):
 
 def test_find_optimal_band_ne10():
     '''
-    cube_partition_band: find_optimal_band(): ne=10, square or rectangle domain
+    cube_partition_stripe: find_optimal_band(): ne=10, square or rectangle domain
     '''
     #
     # caution: find_optimal_band() function does not support nproc=1,2,3
@@ -117,7 +117,7 @@ def test_find_optimal_band_ne10():
 
 def test_find_optimal_band_ne15():
     '''
-    cube_partition_band: find_optimal_band(): ne=15, square or rectangle domain
+    cube_partition_stripe: find_optimal_band(): ne=15, square or rectangle domain
     '''
     #
     # caution: find_optimal_band() function does not support nproc=1,2,3
@@ -158,7 +158,7 @@ def test_find_optimal_band_ne15():
 
 def test_find_optimal_band_ne30():
     '''
-    cube_partition_band: find_optimal_band(): ne=30, square or rectangle domain
+    cube_partition_stripe: find_optimal_band(): ne=30, square or rectangle domain
     '''
     #
     # caution: find_optimal_band() function does not support nproc=1,2,3
@@ -258,7 +258,7 @@ def test_find_optimal_band_ne30():
 
 def test_find_optimal_band_ne10_2():
     '''
-    cube_partition_band: find_optimal_band(): ne=10, irregular domain
+    cube_partition_stripe: find_optimal_band(): ne=10, irregular domain
     '''
     ne = 10
 
@@ -359,18 +359,18 @@ def test_find_optimal_band_ne10_2():
 
 def test_make_cube_rank():
     '''
-    cube_partition_band: make_cube_rank(): ne=10, square or rectangle domain
+    cube_partition_stripe: make_cube_rank(): ne=10, square or rectangle domain
     '''
     ne = 10
 
     nproc = 1
-    obj = CubePartitionBand(ne, nproc)
+    obj = CubePartitionStripe(ne, nproc)
     nelems, cube_rank, cube_lid = obj.make_cube_rank()
     a_equal(nelems, ne*ne*6)
     a_equal(cube_rank, 0)
 
     nproc = 2
-    obj = CubePartitionBand(ne, nproc)
+    obj = CubePartitionStripe(ne, nproc)
     nelems, cube_rank, cube_lid = obj.make_cube_rank()
     a_equal(nelems, ne*ne*3)
     a_equal(cube_rank[:,:,-1], 0)
@@ -378,7 +378,7 @@ def test_make_cube_rank():
     a_equal(cube_rank[:,:,2:5], 1)
 
     nproc = 3
-    obj = CubePartitionBand(ne, nproc)
+    obj = CubePartitionStripe(ne, nproc)
     nelems, cube_rank, cube_lid = obj.make_cube_rank()
     a_equal(nelems, ne*ne*2)
     a_equal(cube_rank[:,:,-1], 0)
@@ -387,7 +387,7 @@ def test_make_cube_rank():
     a_equal(cube_rank[:,:,3:5], 2)
 
     nproc = 4
-    obj = CubePartitionBand(ne, nproc)
+    obj = CubePartitionStripe(ne, nproc)
     nelems, cube_rank, cube_lid = obj.make_cube_rank()
     a_equal(nelems, ne*ne*6//4)
     a_equal(cube_rank[:,:,-1], 0)
@@ -400,7 +400,7 @@ def test_make_cube_rank():
     a_equal(cube_rank[:,:,4], 3)
 
     nproc = 6
-    obj = CubePartitionBand(ne, nproc)
+    obj = CubePartitionStripe(ne, nproc)
     nelems, cube_rank, cube_lid = obj.make_cube_rank()
     a_equal(nelems, ne*ne)
     a_equal(cube_rank[:,:,-1], 0)
